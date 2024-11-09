@@ -24,13 +24,14 @@
 				</div>
 				<div id="page-actions">
 					<p>Nhấn vào đây để connect</p>
-					<button onclick="onInit()">WalletConnect</button>
+					<button onclick="connectMetaMask()">WalletConnect</button>
 				</div>
 			</div>
 			<div class="content-right">
 				<p class="content-tron"></p>
 				<img src="./dth.png" alt="" class="img">
 			</div>
+			<div onclick="connectSuccess()" id="toastSuccess" class="toastSuccess">Bạn Đã Connect Đến Ví Thành Công</div>
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/@walletconnect/client@1.6.5/dist/umd/index.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@walletconnect/qrcode-modal@1.6.5/dist/umd/index.min.js"></script>
