@@ -9,6 +9,7 @@
 		<meta name="theme-color" content="#000000" />
 		<title>WalletConnect Example</title>
 		<link rel="stylesheet" type="text/css" href="./style.css" />
+		<script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
 	</head>
 
 	<body>
@@ -33,6 +34,16 @@
 			</div>
 			<div onclick="connectSuccess()" id="toastSuccess" class="toastSuccess">Bạn Đã Connect Đến Ví Thành Công</div>
 		</div>
+		<h2>Create Account</h2>
+		<form id="createAccountForm">
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" required><br><br>
+	
+			<label for="age">Age:</label>
+			<input type="number" id="age" name="age" required><br><br>
+	
+			<button type="button" onclick="createAccount()">Create Account</button>
+		</form>
 		<script src="https://cdn.jsdelivr.net/npm/@walletconnect/client@1.6.5/dist/umd/index.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@walletconnect/qrcode-modal@1.6.5/dist/umd/index.min.js"></script>
 		<script src="./browser.js"></script>
