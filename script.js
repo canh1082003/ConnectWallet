@@ -1,34 +1,79 @@
 "use strict";
 
-updateTitle();
+let accountManager;
 
-const WalletConnect = window.window.WalletConnect.default;
-const WalletConnectQRCodeModal = window.WalletConnectQRCodeModal.default;
-const bridge = "https://bridge.walletconnect.org";
+// Hàm khởi tạo contract
+function initContract() {
+  const contractAddress = "0x540d7E428D5207B30EE03F2551Cbb5751D3c7569";
+  const abi = [
+    {
+      inputs: [
+        { internalType: "string", name: "_name", type: "string" },
+        { internalType: "uint256", name: "_age", type: "uint256" },
+      ],
+      name: "createAccount",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "_walletAddress", type: "address" },
+      ],
+      name: "getAccount",
+      outputs: [
+        { internalType: "string", name: "", type: "string" },
+        { internalType: "uint256", name: "", type: "uint256" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "string", name: "_name", type: "string" },
+        { internalType: "uint256", name: "_age", type: "uint256" },
+      ],
+      name: "updateAccount",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "deleteAccount",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "address", name: "", type: "address" }],
+      name: "accounts",
+      outputs: [
+        { internalType: "string", name: "name", type: "string" },
+        { internalType: "uint256", name: "age", type: "uint256" },
+        { internalType: "address", name: "walletAddress", type: "address" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  ];
 
-let walletConnector = null;
-
-function onInit() {
-  walletConnector = new WalletConnect({
-    bridge: "https://bridge.walletconnect.org",
-  });
-
-  if (!walletConnector.connected) {
-    walletConnector.createSession().then(() => {
-      const uri = walletConnector.uri;
-      console.log(uri);
-      WalletConnectQRCodeModal.open(uri, () => {
-        console.log("QR Code Modal closed");
-      });
-    });
+  if (typeof window.ethereum !== "undefined") {
+    const web3 = new Web3(window.ethereum);
+    accountManager = new web3.eth.Contract(abi, contractAddress);
   } else {
-    const { accounts, chainId } = walletConnector;
-    updateSessionDetails({ accounts, chainId });
+    console.error("Web3 not detected. Make sure MetaMask is installed.");
   }
-
-  onSubscribe();
 }
 
+// Đảm bảo contract đã được khởi tạo trước khi sử dụng
+async function ensureContractInitialized() {
+  if (!accountManager) {
+    initContract();
+  }
+}
+
+// Kết nối MetaMask
 async function connectMetaMask() {
   if (typeof window.ethereum !== "undefined") {
     try {
@@ -44,6 +89,7 @@ async function connectMetaMask() {
       setTimeout(() => {
         toast.style.display = "none";
       }, 5000);
+      return accounts[0]; // Trả về địa chỉ ví đã kết nối
     } catch (error) {
       console.error("User rejected connection", error);
     }
@@ -52,9 +98,50 @@ async function connectMetaMask() {
   }
 }
 
-// async function updateTitle() {
-//   const { version } = await getJsonFile("../../lerna.json");
-//   const title = document.getElementById("page-title");
-//   title.innerHTML =
-//     title.innerHTML.replace(/\sv(\w.)+.\w+/gi, "") + ` v${version}`;
-// }
+// Tạo tài khoản mới
+async function createAccount() {
+  await ensureContractInitialized();
+  const account = await connectMetaMask();
+  const name = document.getElementById("name").value;
+  const age = parseInt(document.getElementById("age").value, 10);
+  if (account) {
+    await accountManager.methods
+      .createAccount(name, age)
+      .send({ from: account });
+    console.log("Account created");
+  }
+}
+
+// Lấy thông tin tài khoản
+async function getAccount() {
+  await ensureContractInitialized();
+  const account = await connectMetaMask();
+  if (account) {
+    const result = await accountManager.methods.getAccount(account).call();
+    console.log("Account Info:", result);
+  }
+}
+
+// Cập nhật tài khoản
+async function updateAccount(name, age) {
+  await ensureContractInitialized();
+  const account = await connectMetaMask();
+  if (account) {
+    await accountManager.methods
+      .updateAccount(name, age)
+      .send({ from: account });
+    console.log("Account updated");
+  }
+}
+
+// Xoá tài khoản
+async function deleteAccount() {
+  await ensureContractInitialized();
+  const account = await connectMetaMask();
+  if (account) {
+    await accountManager.methods.deleteAccount().send({ from: account });
+    console.log("Account deleted");
+  }
+}
+
+window.onload = initContract;
