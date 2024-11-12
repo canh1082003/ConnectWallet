@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./styleCustom.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+		/>
+		<title>Custom</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="main_Custom">
+				<div class="custom_left">
+					<h2>CUSTOM</h2>
+					<div class="button-group">
+						<button id="addAccount">Add Account</button>
+						<button id="editAccount">Edit Account</button>
+					</div>
+				</div>
+				<div class="custom_right">
+					<div class="header">
+						<div class="search" style="display: none">
+							<div class="box">
+								<form name="search">
+									<input
+										type="text"
+										class="inputSearch"
+										name="txt"
+										onmouseout="this.value = ''; this.blur();"
+									/>
+								</form>
+								<i class="fas fa-search"></i>
+							</div>
+						</div>
+					</div>
+
+					<div id="container-add" class="container-add">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="main-box no-header clearfix main-box-pd">
+									<div class="main-box-body clearfix">
+										<h3 class="text-center">ADD ACCOUNT</h3>
+										<div class="table-responsive">
+											<label for="name">Name:</label><br />
+											<input
+												type="text"
+												id="name"
+												name="name "
+												required
+											/><br />
+											<label for="age">Age:</label><br />
+											<input type="number" id="age" name="age" required /><br />
+
+											<label for="address">Address:</label><br />
+											<input type="text" id="address" name="address" required />
+										</div>
+										<div class="btn-addAcount text-center">
+											<button class="btnadd">ADD</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						id="container-list"
+						class="container-list bootstrap snippets bootdey"
+						style="display: none"
+					>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="main-box no-header clearfix">
+									<div class="main-box-body clearfix">
+										<div class="table-responsive">
+											<table class="table user-list">
+												<thead>
+													<tr>
+														<th><span>Name</span></th>
+														<th class="text-center"><span>Age</span></th>
+														<th><span>Address</span></th>
+														<th>&nbsp;</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td class="text-center">Nguyễn Văn Kiện</td>
+														<td class="text-center">18</td>
+														<td class="text-center">
+															<a href="#"
+																>0x9764D452641781b6cBB4e7fb4E1A07C0059b9a9F</a
+															>
+														</td>
+														<td style="width: 20%">
+															<a href="#" class="table-link text-info">
+																<span class="fa-stack">
+																	<i class="fa fa-square fa-stack-2x"></i>
+																	<i
+																		id="edit"
+																		class="fa fa-pencil fa-stack-1x fa-inverse"
+																	></i>
+																</span>
+															</a>
+															<a href="#" class="table-link danger">
+																<span class="fa-stack">
+																	<i class="fa fa-square fa-stack-2x"></i>
+																	<i
+																		class="fa fa-trash-o fa-stack-1x fa-inverse"
+																	></i>
+																</span>
+															</a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="editAccountModal" class="modal">
+					<div class="modal-content">
+						<span class="close">&times;</span>
+						<h3 class="text-center">EDIT ACCOUNT</h3>
+						<div class="table-responsive text-center">
+							<input type="text" placeholder="User" id="editUser" /><br />
+							<input type="number" placeholder="Age" id="editAge" /><br />
+							<input type="text" placeholder="Address" id="editAddress" />
+						</div>
+						<div class="btn-editAccount text-center">
+							<button class="btnEdit">SAVE</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="./customJs.js"></script>
+	</body>
+</html>

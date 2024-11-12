@@ -89,6 +89,9 @@ async function connectMetaMask() {
       setTimeout(() => {
         toast.style.display = "none";
       }, 5000);
+
+      document.getElementById("btn_manage").style.display = "inline-block";
+
       return accounts[0]; // Trả về địa chỉ ví đã kết nối
     } catch (error) {
       console.error("User rejected connection", error);
@@ -97,7 +100,10 @@ async function connectMetaMask() {
     alert("Please install MetaMask!");
   }
 }
-
+// Chuyển sang custom 
+function redirectToManage() {
+  window.location.href = "http://127.0.0.1:5500/custom.html";
+}
 // Tạo tài khoản mới
 async function createAccount() {
   await ensureContractInitialized();

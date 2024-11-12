@@ -84,3 +84,19 @@
   text-align: center;
   border-radius: 5px;
 }
+.btnManage{
+  display: block;
+}
+#btn_manage{
+  display: none;
+  position: relative;
+  top: -135px;
+  padding: 20px;
+  margin-left: 40px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
+}
+#btn_manage:hover{
+  background-color: yellow;
+}
